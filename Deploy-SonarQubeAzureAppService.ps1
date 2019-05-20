@@ -13,11 +13,13 @@ Write-Output 'Getting a list of downloads'
 #$zipFiles = $allDownloads[0].Links | Where-Object { $_.href.EndsWith('.zip') -and !($_.href.contains('alpha') -or $_.href.contains('RC')) }
 #$latestFile = $zipFiles[-1]
 #$downloadUri = $downloadSource + $latestFile.href
-$downloadSource = 'https://binaries.sonarsource.com/CommercialDistribution/sonarqube-developer/sonarqube-developer-7.7.zip'
-$downloadUri = $downloadSource
+$latestFile = 'sonarqube-developer-7.7.zip'
+$downloadSource = 'https://binaries.sonarsource.com/CommercialDistribution/sonarqube-developer/'
+$downloadUri = $downloadSource + $latestFile
 
 Write-Output "Downloading '$downloadUri'"
-$outputFile = "..\wwwroot\$($latestFile.href)"
+#$outputFile = "..\wwwroot\$($latestFile.href)"
+$outputFile = "..\wwwroot\$($latestFile)"
 Invoke-WebRequest -Uri $downloadUri -OutFile $outputFile -UseBasicParsing
 Write-Output 'Done downloading file'
 
