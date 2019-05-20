@@ -1,4 +1,4 @@
-﻿Write-Output 'Copy wwwroot folder'
+Write-Output 'Copy wwwroot folder'
 xcopy wwwroot ..\wwwroot /Y
 
 Write-Output 'Setting Security to TLS 1.2'
@@ -7,11 +7,14 @@ Write-Output 'Prevent the progress meter from trying to access the console'
 $global:progressPreference = 'SilentlyContinue'
 
 Write-Output 'Getting a list of downloads'
-$downloadSource = 'https://binaries.sonarsource.com/Distribution/sonarqube/'
-$allDownloads = Invoke-WebRequest -Uri $downloadSource -UseBasicParsing
-$zipFiles = $allDownloads[0].Links | Where-Object { $_.href.EndsWith('.zip') -and !($_.href.contains('alpha') -or $_.href.contains('RC')) }
-$latestFile = $zipFiles[-1]
-$downloadUri = $downloadSource + $latestFile.href
+#comment out open source version for Developer.
+#$downloadSource = 'https://binaries.sonarsource.com/Distribution/sonarqube/'
+#$allDownloads = Invoke-WebRequest -Uri $downloadSource -UseBasicParsing
+#$zipFiles = $allDownloads[0].Links | Where-Object { $_.href.EndsWith('.zip') -and !($_.href.contains('alpha') -or $_.href.contains('RC')) }
+#$latestFile = $zipFiles[-1]
+#$downloadUri = $downloadSource + $latestFile.href
+$downloadSource = 'https://binaries.sonarsource.com/CommercialDistribution/sonarqube-developer/sonarqube-developer-7.7.zip'
+$downloadUri = $downloadSource
 
 Write-Output "Downloading '$downloadUri'"
 $outputFile = "..\wwwroot\$($latestFile.href)"
